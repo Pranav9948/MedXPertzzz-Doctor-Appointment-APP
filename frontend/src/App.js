@@ -1,10 +1,15 @@
-import React from "react";
-import { DatePicker } from "antd";
+import toast, { Toaster } from "react-hot-toast";
+import Routers from "./Routers";
+
+
 
 function App() {
   return (
     <>
-
+      <div>
+        <Routers/>
+        <Toaster position="top-center" />
+      </div>
     </>
   );
 }
