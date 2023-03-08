@@ -8,6 +8,7 @@ import applyDoct3   from "../../../Images/docApply2.jpg";
 import applyDoct4   from "../../../Images/applyDoctor3.jpg";
 import Button from "react-bootstrap/Button";
 import "../../../styles/componentStyles/userHome/UserApplyAsDoctor.css";
+import { Link } from "react-router-dom";
 
 function UserApplyAsDoctor() {
   return (
@@ -56,15 +57,19 @@ function UserApplyAsDoctor() {
             <div className="applyDocBtn">
               <Row>
                 <Col md={6}>
-                  <Button variant="warning" size="lg" className="btn1">
-                    Apply As Doctor
-                  </Button>
+                  <Link to={"/applyfordoctor"}>
+                    <Button variant="warning" size="lg" className="btn1">
+                      Apply As Doctor
+                    </Button>
+                  </Link>{" "}
                 </Col>
 
                 <Col md={6}>
-                  <Button variant="warning" size="lg" className="btn2">
-                    View our Doctors
-                  </Button>
+                  <Link to="/viewourdoctors">
+                    <Button variant="warning" size="lg" className="btn2">
+                      View our Doctors
+                    </Button>
+                  </Link>
                 </Col>
               </Row>
             </div>

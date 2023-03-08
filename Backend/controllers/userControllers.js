@@ -1,6 +1,10 @@
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Doctor = require("../models/doctorModel");
+
+
+
 // const protect = require("../middleware/authMiddleware");
 // const Doctors = require("../models/doctorModel");
 // const Appointments = require("../models/appointmentModel");
@@ -110,10 +114,132 @@ try {
       .send({ message: "Error getting user info", success: false, error });
   }
 }
+
+const applyForDoctorAccount= async (req, res) => {
+  try {
+    const newdoctor = new Doctor({ ...req.body, status: "pending" });
+    await newdoctor.save();
+    const adminUser = await Users.findOne({ isAdmin: true });
+
+    const unseenNotifications = adminUser.unseenNotifications;
+    unseenNotifications.push({
+      type: "new-doctor-request",
+      message: `${newdoctor.firstName} ${newdoctor.lastName} has applied for a doctor account`,
+      data: {
+        doctorId: newdoctor._id,
+        name: newdoctor.firstName + " " + newdoctor.lastName,
+      },
+      onClickPath: "/admin/doctorslist",
+    });
+    await Users.findByIdAndUpdate(adminUser._id, { unseenNotifications });
+    res.status(200).send({
+      success: true,
+      message: "Doctor account applied successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error applying doctor account",
+      success: false,
+      error,
+    });
+  }
+}
+
+
+
+const markAllAsSeen=async (req, res) => {
+    try {
+
+      console.log("22222reached");
+
+      const user = await Users.findOne({ _id: req.body.userId });
+      const unseenNotifications = user.unseenNotifications;
+      const seenNotifications = user.seenNotifications;
+      seenNotifications.push(...unseenNotifications);
+      user.unseenNotifications = [];
+      user.seenNotifications = seenNotifications;
+      const updatedUser = await user.save();
+      updatedUser.password = undefined;
+      res.status(200).send({
+        success: true,
+        message: "All notifications marked as seen",
+        data: updatedUser,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error applying doctor account",
+        success: false,
+        error,
+      });
+    }
+  }
+
+
+const deleteAllNotifications = async (req, res) => {
+  try {
+    console.log("4444helloreached");
+    const user = await Users.findOne({ _id: req.body.userId });
+    user.seenNotifications = [];
+    user.unseenNotifications = [];
+    const updatedUser = await user.save();
+    updatedUser.password = undefined;
+    res.status(200).send({
+      success: true,
+      message: "All notifications cleared",
+      data: updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error applying doctor account",
+      success: false,
+      error,
+    });
+  }
+};
+
+
+
+ const getApprovedDoctorsList=async (req, res) => {
+
+
+  try {
+             
+
+    const getApprovedDoctors = await Doctor.find({ status: "Approved" });
+
+    console.log("8777", getApprovedDoctors);
+
+    res.status(200).send({
+      message: "fetching doctor details successfull",
+      success: true,
+      getApprovedDoctors,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .send({ message: "cannot fetch approved doctors", success: false, err });
+  }
+};
+
+
+
+
+
+
+
+
+
     
 
 module.exports = {
   registration,
   loginDetails,
-  getUserInfoById
-}
+  getUserInfoById,
+  applyForDoctorAccount,
+  markAllAsSeen,
+  deleteAllNotifications,
+  getApprovedDoctorsList,
+};

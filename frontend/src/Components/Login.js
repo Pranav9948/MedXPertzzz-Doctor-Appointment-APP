@@ -27,10 +27,17 @@ import axiosConfig from '../axiosConfig'
 function Login() {
 
 const loading=useSelector((state)=>state.general.loading)
+const userlogin=useSelector((state)=>state.userlogin)
+const Adminzzz = useSelector((state) => state.userlogin?.userInfo?.isAdmin);
 
 console.log("6777",loading)
 
+const {userInfo}=userlogin
 
+console.log("0987654", Adminzzz);
+console.log("444USERlogin",userlogin) 
+console.log("333344443",userInfo)
+console.log("userinfoisadmin111", userInfo?.isAdmin);
 
 const navigate=useNavigate()
 const dispatch=useDispatch()
@@ -67,18 +74,30 @@ const dispatch=useDispatch()
     dispatch(HideLoading())
 
     if(data.success){
-
+        console.log("ookkkkkk");
+        // console.log("userinfoisadmin", userInfo.isAdmin);
+      console.log("2222 datasuccess");
+     
+    
+     
         await toast.success(data.message)
            toast("redirecting to home page...");
 
          localStorage.setItem("doctorAppToken",data.token)
+         localStorage.setItem("userData",JSON.stringify(data.User));
+ console.log("2222 datafinished");
 
-         navigate('/')
+
+         
+         
+         userInfo?.isAdmin ? navigate("/adminHome") : navigate("/");
+
 
     }
 
     else{
-
+ 
+        console.log("errorrred");
          toast.error(data.message);   
          dispatch(HideLoading());
     }

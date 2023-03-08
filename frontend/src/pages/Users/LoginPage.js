@@ -8,6 +8,7 @@ function LoginPage() {
     <>
       <Navbars />
       <Login />
+      
     </>
   );
 

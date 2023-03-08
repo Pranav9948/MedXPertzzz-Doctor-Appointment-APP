@@ -19,12 +19,12 @@ app.use(
 );
 
 const userRoute = require("./Backend/routes/userRoute");
-// const adminRoute = require("./routes/adminRoute");
+const adminRoutes = require("./Backend/routes/adminRoutes");
 // const doctorRoute = require("./routes/doctorsRoute");
 // const path = require("path");
 
 app.use("/api/users", userRoute);
-// app.use("/api/admin", adminRoute);
+app.use("/api/admin", adminRoutes);
 // app.use("/api/doctor", doctorRoute);
 
 app.get("/", function (req, res) {

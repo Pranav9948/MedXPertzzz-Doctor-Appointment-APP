@@ -13,7 +13,7 @@ import "../../../styles/componentStyles/userHome/footer.css";
 
 function Footers() {
   return (
-    <footer>
+    <footer >
       <Container>
         <Row>
           <Col md={3} sm={6}>
