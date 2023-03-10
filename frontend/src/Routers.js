@@ -4,11 +4,14 @@ import Layout from "./Components/Layouts/Layout";
 import ProtectedRoutes from "./Components/ProtectedRoutes";
 import PublicRoutes from "./Components/PublicRoutes";
 import SuccessApplyDoctor from "./Components/users/applyForDoctor.js/SuccessApplyDoctor";
+import BookDoctorAppointment from "./Components/users/BookDoctorAppointment";
 import AdminViewDoctors from "./pages/Admin/AdminViewDoctors";
 import DetailedDoctorverify from "./pages/Admin/DetailedDoctorverify";
 import EditUsers from "./pages/Admin/EditUsers";
 import LayoutAdmin from "./pages/Admin/LayoutAdmin";
 import ShowAllUsers from "./pages/Admin/ShowAllUsers";
+import DoctorsHomePage from "./pages/Doctors/DoctorsHomePage";
+import Profile from "./pages/Doctors/Profile";
 import Notifications from "./pages/Notifications";
 import ApplyAsDoctor from "./pages/Users/ApplyForDoctor";
 import Cardik from "./pages/Users/Cardik";
@@ -135,6 +138,37 @@ function Routers() {
           <AdminProtectedRoutes>
             <DetailedDoctorverify />
           </AdminProtectedRoutes>
+        }
+      />
+
+      {/* DOCTORSpAGES */}
+
+      <Route
+        path="/doctorhome"
+        element={
+          <ProtectedRoutes>
+            <DoctorsHomePage />
+          </ProtectedRoutes>
+        }
+      />
+
+     
+
+      <Route
+        path="/bookDoctorAppointment/:doctorId"
+        element={
+          <ProtectedRoutes>
+            <BookDoctorAppointment/>
+          </ProtectedRoutes>
+        }
+      />
+
+      <Route
+        path="/doctor/profile/:userId"
+        element={
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
         }
       />
     </Routes>

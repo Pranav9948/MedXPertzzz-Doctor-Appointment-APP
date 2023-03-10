@@ -20,12 +20,12 @@ app.use(
 
 const userRoute = require("./Backend/routes/userRoute");
 const adminRoutes = require("./Backend/routes/adminRoutes");
-// const doctorRoute = require("./routes/doctorsRoute");
+const doctorRoutes = require("./Backend/routes/doctorsRoutes");
 // const path = require("path");
 
 app.use("/api/users", userRoute);
 app.use("/api/admin", adminRoutes);
-// app.use("/api/doctor", doctorRoute);
+app.use("/api/doctors", doctorRoutes);
 
 app.get("/", function (req, res) {
   res.json({

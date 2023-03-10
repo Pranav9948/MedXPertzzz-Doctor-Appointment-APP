@@ -243,3 +243,13 @@ module.exports = {
   deleteAllNotifications,
   getApprovedDoctorsList,
 };
+
+
+
+
+
+
+
+
+
+
